@@ -1,0 +1,1126 @@
+<html>
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </head>
+  <body style="background-image: linear-gradient(40deg, Red , Green, Blue);">
+    
+    <div id="game">
+      
+    
+      <button id="connectDevices" type="button" class="btn btn-info rounded" style="position:fixed; right: 40%; width: 20%; height: 20%; font-family: Papyrus; font-size: 300%">
+        Connect Devices
+      </button>
+
+      <ul id="playerList" class="list-group; center" style="position: fixed; width: 105%; height: 10%; left: 69%;">
+        <li class="list-group-item list-group-item-info rounded" style="width: 20%; text-align: center">Players</li>
+      </ul>
+
+
+      <div id="alreadyConnectedAlert" class="alert alert-warning alert-dismissible fade show invisible" role="alert" style="text-align: center">
+        <strong>This device has already been connected</strong>
+      </div>
+
+
+      <button id="startGame" type="button" class="btn btn-info rounded" style="position:fixed; right: 37%; width: 25%; height: 25%; top: 37%; font-family: Papyrus; font-size: 500%">
+        Start Game
+        <br>
+        <p id="playerCountRuleCheck" style="font-size: 30%">
+          (at least 1 player)
+        </p>
+      </button>
+
+      <li id="getReady" class="list-group-item list-group-item-info rounded-pill text-center; visibility: invisible" style="position: fixed; width: 50%; height: 20%; font-size: 700%; left: 25%; top: 30%"><p style="position: relative; text-align: center" id="getReadyFR">
+        Get Ready!
+        </p></li>
+
+
+      <div id="question" style="display: none"> <!-- Use this plz -->
+        <li id="questionText" class="list-group-item list-group-item-info rounded text-center; visibility: visible" style="position: fixed; width: 90%; height: 30%; font-size: 300%; left: 5%; top: 2%"></li>
+        <li id="answer1" class="list-group-item list-group-item-info rounded text-center; visibility: visible" style="position: fixed; width: 40%; height: 20%; font-size: 200%; left: 5%; top: 40%"></li>
+        <li id="answer2" class="list-group-item list-group-item-info rounded text-center; visibility: visible" style="position: fixed; width: 40%; height: 20%; font-size: 200%; left: 55%; top: 40%"></li>
+        <li id="answer3" class="list-group-item list-group-item-info rounded text-center; visibility: visible" style="position: fixed; width: 40%; height: 20%; font-size: 200%; left: 5%; top: 70%"></li>
+        <li id="answer4" class="list-group-item list-group-item-info rounded text-center; visibility: visible" style="position: fixed; width: 40%; height: 20%; font-size: 200%; left: 55%; top: 70%"></li>
+        <li id="chooseClickFR" class="list-group-item list-group-item-info rounded-pill text-center; visibility: visible" style="position: fixed; width: 10%; height: 10%; font-size: 350%; left: 45%; top: 60%"><p style="position: relative; left: 35%" id="chooseClick">
+          10
+          </p></li>
+      </div>
+
+      <div id="pointsSoFar" style="display: none"><!--Use this too plz-->
+        <ul id="playerListPoints" class="list-group; center" style="position: fixed; width: 105%; height: 10%; left: 30%;">
+          <li class="list-group-item list-group-item-info rounded" style="width: 20%; text-align: center">Leaderboard</li>
+        </ul>
+      </div>
+
+      <div id="nextQuestion" style="display: none">
+        <li id="nextQuestionText" class="list-group-item list-group-item-info rounded" style="width: 70%; height: 25%; left: 15%; top: 40%; text-align: center; font-size: 650%">Next Question</li>
+      </div>
+
+      <div id="leaderboardFinalStats" style="display: none">
+        <img src="https://cdn.glitch.global/c66104fe-f30a-4582-8481-fd95e1101d4a/podium-removebg-preview.png?v=1642485491680" id="podium" style="position: fixed; width: 90%; left: 5%; top: -10%">
+        <li id="firstPlace" class="list-group-item list-group-item-info rounded;" style="position: fixed; width: 20%; height: 10%; text-align: center; font-size: 100%; left: 40%; top: 40%">Player1</li>
+        <li id="secondPlace" class="list-group-item list-group-item-info rounded" style="position: fixed; width: 20%; height: 10%; text-align: center; font-size: 100%; left: 20%; top: 45%">Player2</li>
+        <li id="thirdPlace" class="list-group-item list-group-item-info rounded" style="position: fixed; width: 20%; height: 10%; text-align: center; font-size: 100%; left: 61%; top: 53%">Player3</li>
+      </div>
+
+      <li id="clickDeviceToConnect" class="list-group-item list-group-item-warning rounded" style="position: fixed; width: 40%; height: 30%; text-align: center; font-size: 600%; left: 32%; top: 33%; visibility: hidden;">Hold a button to connect</li>
+
+      <div id="changeNameDiv" style="display: none">
+        <li id="changeNameText" class="list-group-item list-group-item-info rounded;" style="position: fixed; width: 20%; height: 10%; text-align: center; font-size: 100%; left: 40%; top: 70%">Change Name:</li>
+        <textarea id="changeNameTextArea" class="form-control" rows="1" style="position: fixed; width: 10%; left: 45%; top: 75%" maxlength="20" minlength="2"></textarea>
+        <button id="changeNameButton" type="button" class="btn btn-info rounded" style="position: fixed; width: 4%; height: 5%; font-size: 70%; left: 55.5%; top: 74.5%">Set New name</button>
+      </div>
+
+      <li id="answerToQuestion" class="list-group-item list-group-item-info rounded" style="visibility: hidden; width: 40%; left: 30%; height: 20%; top: 60%; text-align: center"><p id="whichAnswer" style="position: relative; top: 10%; font-size: 400%">
+        The answer was E!
+        </p></li>
+
+      <div id="differentQuizOptions">
+        <button id="createMyOwnQuiz" type="button" class="btn btn-info rounded" style="position:fixed; right: 80%; top: 37.9%; width: 20%; height: 10%; font-family: Papyrus; font-size: 150%">
+          Create Custom Quiz (Minimum 2 questions) (Beta)
+        </button>
+        <button id="uploadMyOwnQuiz" type="file" value="import" class="btn btn-info rounded" style="position:fixed; right: 80%; top: 48.5%; width: 20%; height: 10%; font-family: Papyrus; font-size: 130%">
+          Play Custom Quiz (Beta) (JSON)
+          <input id="selectFile" type="file" value="import">
+        </button>
+      </div>
+
+    </div>
+    
+    
+    <!-- Creating the Custom Quiz  -->
+    
+    <div id="everythingInCustomQuiz" style="display: none">
+      
+      <!--WHICH QUESTION ARE WE ON?-->
+      
+      <li id="questionNumber" class="list-group-item list-group-item-info rounded-pill" style="position: fixed; visibility: visible; width: 20%; left: 3%; height: 4%; top: 5%; text-align: center">Question #</li>
+      
+      <!--NEW QUESTION-->
+      
+      <li id="createNewQuestion" class="list-group-item list-group-item-info rounded-pill" style="position: fixed; visibility: visible; width: 20%; left: 77%; height: 4%; top: 5%; text-align: center">+ Question</li>
+      
+      <!--COMPILE THE QUIZ TOGETHER TO DOWNLOAD AND PLAY! OR JUST PLAY-->
+      <li id="compileQuiz" class="list-group-item list-group-item-info rounded-pill" style="position: fixed; visibility: visible; width: 20%; left: 77%; height: 5.5%; top: 11%; text-align: center">Assemble Quiz Now</li>
+
+      <!--QUESTION INPUT TEXT FIELD-->
+      <input id="inputQuestion" class="form-control" type="text" style="position: fixed; width: 70%; left: 15%; text-align: center; height: 10%; top: 20%; font-size: 150%" placeholder="Type Question Here">
+      
+      <input id="inputAnswerA" class="form-control" type="text" style="position: fixed; width: 30%; left: 15%; text-align: center; height: 10%; top: 40%; font-size: 150%" placeholder="Type Answer A Here">
+            
+      <button id="setAnswerACorrect" type="button" class="btn btn-info rounded" style="position:fixed; left: 86%; top: 41.5%; width: 5%; height: 7%; font-size: 130%">
+          ✔️ 
+      </button>
+      
+      <input id="inputAnswerB" class="form-control" type="text" style="position: fixed; width: 30%; left: 55%; text-align: center; height: 10%; top: 40%; font-size: 150%" placeholder="Type Answer B Here">
+      
+      <button id="setAnswerBCorrect" type="button" class="btn btn-info rounded" style="position:fixed; left: 9%; top: 41.5%; width: 5%; height: 7%; font-size: 130%">
+          ✔️ 
+      </button>
+      
+      <input id="inputAnswerC" class="form-control" type="text" style="position: fixed; width: 30%; left: 15%; text-align: center; height: 10%; top: 60%; font-size: 150%" placeholder="Type Answer C Here">
+      
+      <button id="setAnswerCCorrect" type="button" class="btn btn-info rounded" style="position:fixed; left: 9%; top: 61.5%; width: 5%; height: 7%; font-size: 130%">
+          ✔️ 
+      </button>
+      
+      <input id="inputAnswerD" class="form-control" type="text" style="position: fixed; width: 30%; left: 55%; text-align: center; height: 10%; top: 60%; font-size: 150%" placeholder="Type Answer D Here">
+      
+      <button id="setAnswerDCorrect" type="button" class="btn btn-info rounded" style="position:fixed; left: 86%; top: 61.5%; width: 5%; height: 7%; font-size: 130%">
+          ✔️ 
+      </button>
+      
+      <div id="wrongDoing" class="alert alert-danger rounded-pill" role="alert" style="width: 40%; left: 30%; text-align: center; height: 12%; font-size: 140%; visibility: hidden">
+        Be sure to include question name, 1 correct answer, and at least 2 answer inputs!
+      </div>
+      
+      <div id="wrongDoingFINAL" class="alert alert-danger rounded-pill" role="alert" style="width: 50%; left: 30%; text-align: center; height: 10%; font-size: 140%; visibility: hidden">
+        Compiling this quiz without having a question name, 1 correct answer, and at least 2 answer inputs will result in not saving this question. Click this to continue
+      </div>
+      
+    </div>
+    
+    <div id="downloadSection">
+      <button id="downloadGame" type="button" class="btn btn-info rounded" style="position:fixed; right: 37%; width: 25%; height: 15%; top: 70%; font-family: Papyrus; font-size: 200%; visibility: hidden">
+        Download Game (JSON)
+      </button>
+      
+      <input id="nameJSONFILE" type="text" style="position: fixed; visibility: hidden; width: 20%; left: 40%; top: 90%; text-align: center" placeholder="Name Your File" class="form-control"  role="input">
+    </div>
+    
+    
+    
+    
+    
+    
+    <script>
+      
+      let questionMap = new Map();
+      
+      //Set all questions myself
+      
+      questionMap.set(1, ["What is Jimmy's REAL name?", "Jimmy", "Not Jimmy", "", "", "B"]);
+      questionMap.set(2, ["Which microcontroller was used for this project?", "arduino", "esp32", "Jimmy made his own microcontroller somehow", "Zack", "A"]);
+      questionMap.set(3, ["What time did I fall asleep last night?", "4 AM", "1 AM", "10:30 PM", "3:30 AM", "D"]);
+      questionMap.set(4, ["When is Umars PR day?", "October 2nd, 2021", "April 4th, 2023", "January 22nd, 2022", "January 21st, 2017", "C"]);
+      questionMap.set(5, ["What is 2+2??", "4", "Fish", "Window", "Heart", "B"]);
+      questionMap.set(6, ["What does LMAO mean?", "let my ass off", "let mom appreciate orders", "Laugh my ass off", "I'm not creative enough to make answer D. Choose D please and your sins will be forgivin", "D"]);
+      
+      
+      let controllerToPoints = new Map();
+      let controllerToChoice = new Map();
+      
+      let controllerToCreatedUsername = new Map();
+      
+      let nameToDevice = new Map();
+      let deviceToCharacteristic = new Map();
+      
+      let serviceUUID = "c0a6acdd-955d-4fff-8e03-0bd30140cdcf";
+      let characteristicUUID = "7057d88f-9765-456f-9352-b8f02d7c6b76";
+      let ledUUID = "c7112802-6856-47c7-82f4-736f828f4f68";
+      
+      
+      let device;
+      let service;
+      let characteristic;
+      
+      let ledCharacteristic;
+      
+      let allDevices = [];
+      
+      controllerToPoints.set(1, 2);
+      
+      
+      
+        document.getElementById("connectDevices").addEventListener("click", () => {
+          navigator.bluetooth
+              .requestDevice({
+                filters: [{ services: [serviceUUID] }]
+              })
+              .then(_device => {
+                if ((controllerToPoints.get(_device.name) == undefined) && (allDevices.includes(_device.id) == false)) {
+                  allDevices.push(_device.id);
+                  device = _device;
+                  controllerToPoints.set(device.name, 0);
+                  controllerToChoice.set(device.name, 'E');
+                  nameToDevice.set(device.name, device);
+                  controllerToCreatedUsername.set(device.name, device.name);
+
+                  console.log("got device " + device);
+                  return device.gatt.connect();
+                } else {
+
+                  // User is already in
+                  document.getElementById("alreadyConnectedAlert").className = "alert alert-warning alert-dismissible fade show visible";
+
+                  let playerToCheck;
+
+                  window.setTimeout(function() {
+                    document.getElementById("alreadyConnectedAlert").className = "alert alert-warning alert-dismissible fade show invisible";
+                  }, 2500);
+
+                  return undefined
+
+                }
+              })
+              .then((thingymch) => {
+                console.log("Device Connected");
+
+                if (thingymch) {
+
+                  document.getElementById("clickDeviceToConnect").style.visibility = "visible";
+
+
+                  return device.gatt.getPrimaryService(serviceUUID);
+                }
+
+
+              })
+              .then(_service => {
+
+
+                service = _service;
+                return service.getCharacteristic(characteristicUUID);
+              })
+              .then(_characteristic => {
+
+                let classColors = ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"];
+                let randomColor = classColors[Math.floor(Math.random() * 7)];
+
+                let newPlayerElement = document.createElement('li');
+                newPlayerElement.className = `list-group-item list-group-item-${randomColor} rounded`;
+                newPlayerElement.innerHTML = `${device.name}`;
+                newPlayerElement.style="width: 20%; text-align: center"
+                document.getElementById("playerList").appendChild(newPlayerElement);
+
+                document.getElementById("clickDeviceToConnect").style.visibility = "hidden";
+
+                console.log(device);
+                console.log(controllerToPoints);
+
+                let waitForPlayerClick = newPlayerElement.addEventListener("click", function() {
+                  document.getElementById("changeNameDiv").style = '';
+                  console.log("hmmmm")
+                  document.getElementById("changeNameButton").onclick = function() {
+                    if ((document.getElementById("changeNameTextArea").value.length >= 2) && (document.getElementById("changeNameTextArea").value.trim() != "")) {
+
+                      controllerToCreatedUsername.set(device.name, document.getElementById("changeNameTextArea").value);
+                      controllerToPoints.set(controllerToCreatedUsername.get(device.name), 0);
+                      document.getElementById("changeNameDiv").style = "display: none";
+                      console.log(controllerToCreatedUsername)
+                      newPlayerElement.innerHTML = `${document.getElementById("changeNameTextArea").value}`;
+
+                      controllerToChoice.delete(device.name);
+                      controllerToPoints.delete(device.name);
+                      nameToDevice.delete(device.name);
+                      nameToDevice.set(controllerToCreatedUsername.get(device.name), device);
+
+                      // Set arduino data by EEPROM
+
+
+
+                    }
+                  }
+
+                })
+
+                device.addEventListener("gattserverdisconnected", event => {
+                  document.getElementById("playerList").childNodes.forEach(node => {if ((node.innerHTML == controllerToCreatedUsername.get(device.name))) {node.remove()}})
+                  controllerToPoints.delete(controllerToCreatedUsername.get(device.name));
+                  controllerToChoice.delete(device.name); 
+                  nameToDevice.delete(controllerToCreatedUsername.get(device.name));
+                  controllerToCreatedUsername.delete(device.name);
+                  deviceToCharacteristic.delete(device);
+                  allDevices.splice(allDevices.indexOf(device), 1);
+                  console.log(device.name + " has been disconnected");
+
+                  
+
+                })
+                console.log("is this really working?")
+                return _characteristic;
+              })
+              .then(characteristicValue => {
+                characteristic = characteristicValue;
+                characteristic.addEventListener(
+                  "characteristicvaluechanged",
+                  function data(thing) {
+
+                    let decoder = new TextDecoder();
+
+                    if (controllerToChoice.get(controllerToCreatedUsername.get(device.name)) != decoder.decode(thing.target.value)) {
+                        controllerToChoice.set(controllerToCreatedUsername.get(device.name), decoder.decode(thing.target.value));
+                        console.log(controllerToChoice);
+                    }
+                  }
+                );
+                return characteristic.startNotifications();
+                
+              })
+              .then(_yay => {
+                return service.getCharacteristic(ledUUID);
+              })
+              .then(_ledChar => {
+            
+                let encoder = new TextEncoder();
+            
+                deviceToCharacteristic.set(device, _ledChar);
+            
+              })
+
+        })
+      
+      
+        function goGameDirect() {
+          if (controllerToPoints.size >= 1) {
+            
+            if (document.getElementById("selectFile").files.item(0)) {
+              document.getElementById("selectFile").files.item(0).text().then(text => {
+                json = JSON.parse(text);
+                console.log(json);
+
+
+
+                for (let [number, array] in json) {
+                  newQuestionArrayCustom.set(JSON.parse(number), json[number].split("-!-"));
+                }
+
+                console.log(newQuestionArrayCustom)
+
+                questionMap = newQuestionArrayCustom;
+
+
+
+              })
+            }
+            
+            
+            
+            document.getElementById("changeNameDiv").style = "display: none";
+
+              document.getElementById("downloadGame").style.visibility = "hidden";
+
+              document.getElementById("differentQuizOptions").style.visibility = "hidden";
+
+
+              document.getElementById("startGame").className += " visibility: invisible";
+              document.getElementById("playerList").className += " visibility: invisible";
+              document.getElementById("connectDevices").className += " visibility: invisible";
+
+              document.getElementById("nameJSONFILE").style.visibility = "hidden";
+
+              document.getElementById("getReady").className = "list-group-item list-group-item-info rounded-pill text-center; visibility: visible"
+
+              window.setTimeout(function() {
+                document.getElementById("getReady").innerHTML = "3";
+              }, 2500);
+
+              window.setTimeout(function() {
+                document.getElementById("getReady").innerHTML = "2";
+              }, 3600);
+
+              window.setTimeout(function() {
+                document.getElementById("getReady").innerHTML = "1";
+              }, 4700);
+
+              window.setTimeout(function() {
+                document.getElementById("getReady").innerHTML = "Go!";
+              }, 5800);
+
+              let timeFrame = 7200;
+
+              // Loop through all questions. LOOP
+
+              window.setTimeout(function() {
+
+                for (let [player, choice] of controllerToChoice) {
+                  controllerToChoice.set(player, 'E');
+                }
+
+                document.getElementById("getReady").style = "text-align: center; position: fixed; width: 50%; height: 20%; font-size: 700%; left: 25%; top: 30%; display: none";
+
+                let questionNumber = 1;
+
+                displayQuestion()
+
+                function displayQuestion() {
+                  window.setTimeout(function() {
+                    document.getElementById("question").style = "";
+                    document.getElementById("questionText").innerHTML = questionMap.get(questionNumber)[0];
+
+                    document.getElementById("answer1").innerHTML = questionMap.get(questionNumber)[1];
+                    document.getElementById("answer2").innerHTML = questionMap.get(questionNumber)[2];
+
+                    if (questionMap.get(questionNumber)[3] != "") {
+                      document.getElementById("answer3").innerHTML = questionMap.get(questionNumber)[3];
+                    }
+
+                    if (questionMap.get(questionNumber)[4] != "") {
+                      document.getElementById("answer4").innerHTML = questionMap.get(questionNumber)[4];
+                    }
+
+                    let timeLeft = 10;
+
+                    let answerQuick = window.setInterval(function() {
+                      document.getElementById("chooseClick").innerHTML = `${timeLeft}`;
+                      timeLeft -= 1;
+
+                      if (timeLeft < 0) {
+                        clearInterval(answerQuick);
+
+                        if (questionNumber > questionMap.size) {
+                          console.log("done")
+                        } else {
+                          console.log("WORK")
+                          console.log(questionNumber);
+
+
+
+                          // Display leaderboard statistics
+
+                          document.getElementById("question").style = "display: none"
+                          document.getElementById("pointsSoFar").style = "";
+
+                          document.getElementById("playerListPoints").innerHTML = '';
+
+                          document.getElementById("answerToQuestion").style.visibility = "visible";
+                          document.getElementById("whichAnswer").innerHTML = `The Answer Was ${questionMap.get(questionNumber)[questionMap.get(questionNumber).length - 1]}!`;
+
+                          for (let [player, choice] of controllerToChoice) {
+                            console.log("FIX IN THE LOOP")
+                            if (choice == questionMap.get(questionNumber)[questionMap.get(questionNumber).length - 1]) {
+                              controllerToPoints.set(player, controllerToPoints.get(player) + 500);
+
+                              let playerElement = document.createElement('li');
+                              playerElement.className = "list-group-item list-group-item-info rounded"
+                              playerElement.style = "width: 20%; text-align: center";
+                              playerElement.style.color = "green";
+                              playerElement.innerHTML = `${player} - ${controllerToPoints.get(player)}`;
+
+                              console.log(playerElement)
+
+                              document.getElementById("playerListPoints").appendChild(playerElement)
+
+                              let te = new TextEncoder();
+
+                              if (nameToDevice.get(player)) {
+                                deviceToCharacteristic.get(nameToDevice.get(player)).writeValue(te.encode("correct"));
+                              }
+
+                              window.setTimeout(function() {
+                                deviceToCharacteristic.get(nameToDevice.get(player)).writeValue(te.encode("reset"));
+                              }, 5000)
+
+                            } else {
+
+                              let playerElement = document.createElement('li');
+                              playerElement.className = "list-group-item list-group-item-info rounded"
+                              playerElement.style = "width: 20%; text-align: center";
+                              playerElement.style.color = "red";
+                              playerElement.innerHTML = `${player} - ${controllerToPoints.get(player)}`;
+
+                              console.log(playerElement)
+
+                              document.getElementById("playerListPoints").appendChild(playerElement)
+
+                              let te = new TextEncoder();
+
+                              if (nameToDevice.get(player)) {
+                                deviceToCharacteristic.get(nameToDevice.get(player)).writeValue(te.encode("incorrect"));
+                              }
+
+                              window.setTimeout(function() {
+                                deviceToCharacteristic.get(nameToDevice.get(player)).writeValue(te.encode("reset"));
+                              }, 5000)
+
+
+                            }
+
+
+                          }
+
+
+
+                          window.setTimeout(function() {
+
+                            document.getElementById("pointsSoFar").style = "display: none";
+                            document.getElementById("answerToQuestion").style.visibility = "hidden";
+
+
+
+                            questionNumber++;
+                            if (questionNumber <= questionMap.size) { // CHANGE
+
+                              displayQuestion();
+                            } else if (questionNumber > questionMap.size) {
+                              console.log("This should be done")
+                              clearInterval(answerQuick);
+
+                              document.getElementById("question").style = "display: none";
+                              document.getElementById("nextQuestion").style = "";
+                              document.getElementById("nextQuestionText").innerHTML = "Finish 🏁";
+
+                              window.setTimeout(function() {
+                                document.getElementById("nextQuestionText").innerHTML = "The winners are...";
+                              }, 3000)
+
+                              window.setTimeout(function() {
+                                // controllerToPoints <--
+                                // leaderboardFinalStats <--
+
+                                let scoreToPlayer = new Map(Array.from(controllerToPoints, ele => ele.reverse()))
+
+                                let allScores = [];
+
+                                for (let [score, player] of scoreToPlayer) {
+                                  allScores.push(score);
+                                }
+
+
+                                allScores.sort((a, b) => a < b ? 1 : a > b ? -1 : 0);
+                                allScores.slice(0, 3)
+
+                                document.getElementById("nextQuestion").style = "display: none";
+
+                                document.getElementById("leaderboardFinalStats").style = '';
+
+                                document.getElementById("firstPlace").innerHTML = `${scoreToPlayer.get(allScores[0])} - ${allScores[0]}`
+
+                                if (scoreToPlayer.get(allScores[1])) {
+                                  document.getElementById("secondPlace").innerHTML = `${scoreToPlayer.get(allScores[1])} - ${allScores[1]}`
+                                } else {
+                                  document.getElementById("secondPlace").innerHTML = '';
+                                }
+
+                                if (scoreToPlayer.get(allScores[2])) {
+                                  document.getElementById("thirdPlace").innerHTML = `${scoreToPlayer.get(allScores[2])} - ${allScores[2]}`
+                                } else {
+                                  document.getElementById("thirdPlace").innerHTML = '';
+                                }
+
+                                document.getElementById("question").style = "display: none"
+
+
+
+
+
+
+                              }, 6000)
+                            }
+
+                            for (let [player, choice] of controllerToChoice) {
+                              controllerToChoice.set(player, 'E');
+                            }
+
+                          }, 5000)
+                        }
+
+                        //if (questionNumber > questionMap.size) { // CHANGE
+
+
+                        //}
+
+                      }
+                    }, 1000)
+                  }, 1000)
+                }
+
+              }, timeFrame)
+          } else {
+            document.getElementById("playerCountRuleCheck").style.color="red"
+            window.setTimeout(function() {
+              document.getElementById("playerCountRuleCheck").style.color="black"
+            }, 1500)
+          }
+        }
+
+        function goGame() {
+          document.getElementById("startGame").addEventListener("click", function() {
+            
+            
+            if (document.getElementById("selectFile").files.item(0)) {
+              document.getElementById("selectFile").files.item(0).text().then(text => {
+                json = JSON.parse(text);
+                console.log(json);
+
+
+
+                for (let [number, array] in json) {
+                  newQuestionArrayCustom.set(JSON.parse(number), json[number].split("-!-"));
+                }
+
+                console.log(newQuestionArrayCustom)
+
+                questionMap = newQuestionArrayCustom;
+
+
+
+              })
+            }
+            
+            
+            if (controllerToPoints.size >= 1) {
+
+              document.getElementById("changeNameDiv").style = "display: none";
+
+              document.getElementById("downloadGame").style.visibility = "hidden";
+
+              document.getElementById("differentQuizOptions").style.visibility = "hidden";
+
+
+              document.getElementById("startGame").className += " visibility: invisible";
+              document.getElementById("playerList").className += " visibility: invisible";
+              document.getElementById("connectDevices").className += " visibility: invisible";
+
+              document.getElementById("nameJSONFILE").style.visibility = "hidden";
+
+              document.getElementById("getReady").className = "list-group-item list-group-item-info rounded-pill text-center; visibility: visible"
+
+              window.setTimeout(function() {
+                document.getElementById("getReady").innerHTML = "3";
+              }, 2500);
+
+              window.setTimeout(function() {
+                document.getElementById("getReady").innerHTML = "2";
+              }, 3600);
+
+              window.setTimeout(function() {
+                document.getElementById("getReady").innerHTML = "1";
+              }, 4700);
+
+              window.setTimeout(function() {
+                document.getElementById("getReady").innerHTML = "Go!";
+              }, 5800);
+
+              let timeFrame = 7200;
+
+              // Loop through all questions. LOOP
+
+              window.setTimeout(function() {
+
+                for (let [player, choice] of controllerToChoice) {
+                  controllerToChoice.set(player, 'E');
+                }
+
+                document.getElementById("getReady").style = "text-align: center; position: fixed; width: 50%; height: 20%; font-size: 700%; left: 25%; top: 30%; display: none";
+
+                let questionNumber = 1;
+
+                displayQuestion()
+
+                function displayQuestion() {
+                  window.setTimeout(function() {
+                    document.getElementById("question").style = "";
+                    document.getElementById("questionText").innerHTML = questionMap.get(questionNumber)[0];
+
+                    document.getElementById("answer1").innerHTML = questionMap.get(questionNumber)[1];
+                    document.getElementById("answer2").innerHTML = questionMap.get(questionNumber)[2];
+
+                    if (questionMap.get(questionNumber)[3] != "") {
+                      document.getElementById("answer3").innerHTML = questionMap.get(questionNumber)[3];
+                    }
+
+                    if (questionMap.get(questionNumber)[4] != "") {
+                      document.getElementById("answer4").innerHTML = questionMap.get(questionNumber)[4];
+                    }
+
+                    let timeLeft = 10;
+
+                    let answerQuick = window.setInterval(function() {
+                      document.getElementById("chooseClick").innerHTML = `${timeLeft}`;
+                      timeLeft -= 1;
+
+                      if (timeLeft < 0) {
+                        clearInterval(answerQuick);
+
+                        if (questionNumber > questionMap.size) {
+                          console.log("done")
+                        } else {
+                          console.log("WORK")
+                          console.log(questionNumber);
+
+
+
+                          // Display leaderboard statistics
+
+                          document.getElementById("question").style = "display: none"
+                          document.getElementById("pointsSoFar").style = "";
+
+                          document.getElementById("playerListPoints").innerHTML = '';
+
+                          document.getElementById("answerToQuestion").style.visibility = "visible";
+                          document.getElementById("whichAnswer").innerHTML = `The Answer Was ${questionMap.get(questionNumber)[questionMap.get(questionNumber).length - 1]}!`;
+
+                          for (let [player, choice] of controllerToChoice) {
+                            console.log("FIX IN THE LOOP")
+                            if (choice == questionMap.get(questionNumber)[questionMap.get(questionNumber).length - 1]) {
+                              controllerToPoints.set(player, controllerToPoints.get(player) + 500);
+
+                              let playerElement = document.createElement('li');
+                              playerElement.className = "list-group-item list-group-item-info rounded"
+                              playerElement.style = "width: 20%; text-align: center";
+                              playerElement.style.color = "green";
+                              playerElement.innerHTML = `${player} - ${controllerToPoints.get(player)}`;
+
+                              console.log(playerElement)
+
+                              document.getElementById("playerListPoints").appendChild(playerElement)
+
+                              let te = new TextEncoder();
+
+                              if (nameToDevice.get(player)) {
+                                deviceToCharacteristic.get(nameToDevice.get(player)).writeValue(te.encode("correct"));
+                              }
+
+                              window.setTimeout(function() {
+                                deviceToCharacteristic.get(nameToDevice.get(player)).writeValue(te.encode("reset"));
+                              }, 5000)
+
+                            } else {
+
+                              let playerElement = document.createElement('li');
+                              playerElement.className = "list-group-item list-group-item-info rounded"
+                              playerElement.style = "width: 20%; text-align: center";
+                              playerElement.style.color = "red";
+                              playerElement.innerHTML = `${player} - ${controllerToPoints.get(player)}`;
+
+                              console.log(playerElement)
+
+                              document.getElementById("playerListPoints").appendChild(playerElement)
+
+                              let te = new TextEncoder();
+
+                              if (nameToDevice.get(player)) {
+                                deviceToCharacteristic.get(nameToDevice.get(player)).writeValue(te.encode("incorrect"));
+                              }
+
+                              window.setTimeout(function() {
+                                deviceToCharacteristic.get(nameToDevice.get(player)).writeValue(te.encode("reset"));
+                              }, 5000)
+
+
+                            }
+
+
+                          }
+
+
+
+                          window.setTimeout(function() {
+
+                            document.getElementById("pointsSoFar").style = "display: none";
+                            document.getElementById("answerToQuestion").style.visibility = "hidden";
+
+
+
+                            questionNumber++;
+                            if (questionNumber <= questionMap.size) { // CHANGE
+
+                              displayQuestion();
+                            } else if (questionNumber > questionMap.size) {
+                              console.log("This should be done")
+                              clearInterval(answerQuick);
+
+                              document.getElementById("question").style = "display: none";
+                              document.getElementById("nextQuestion").style = "";
+                              document.getElementById("nextQuestionText").innerHTML = "Finish 🏁";
+
+                              window.setTimeout(function() {
+                                document.getElementById("nextQuestionText").innerHTML = "The winners are...";
+                              }, 3000)
+
+                              window.setTimeout(function() {
+                                // controllerToPoints <--
+                                // leaderboardFinalStats <--
+
+                                let scoreToPlayer = new Map(Array.from(controllerToPoints, ele => ele.reverse()))
+
+                                let allScores = [];
+
+                                for (let [score, player] of scoreToPlayer) {
+                                  allScores.push(score);
+                                }
+
+
+                                allScores.sort((a, b) => a < b ? 1 : a > b ? -1 : 0);
+                                allScores.slice(0, 3)
+
+                                document.getElementById("nextQuestion").style = "display: none";
+
+                                document.getElementById("leaderboardFinalStats").style = '';
+
+                                document.getElementById("firstPlace").innerHTML = `${scoreToPlayer.get(allScores[0])} - ${allScores[0]}`
+
+                                if (scoreToPlayer.get(allScores[1])) {
+                                  document.getElementById("secondPlace").innerHTML = `${scoreToPlayer.get(allScores[1])} - ${allScores[1]}`
+                                } else {
+                                  document.getElementById("secondPlace").innerHTML = '';
+                                }
+
+                                if (scoreToPlayer.get(allScores[2])) {
+                                  document.getElementById("thirdPlace").innerHTML = `${scoreToPlayer.get(allScores[2])} - ${allScores[2]}`
+                                } else {
+                                  document.getElementById("thirdPlace").innerHTML = '';
+                                }
+
+                                document.getElementById("question").style = "display: none"
+
+
+
+
+
+
+                              }, 6000)
+                            }
+
+                            for (let [player, choice] of controllerToChoice) {
+                              controllerToChoice.set(player, 'E');
+                            }
+
+                          }, 5000)
+                        }
+
+                        //if (questionNumber > questionMap.size) { // CHANGE
+
+
+                        //}
+
+                      }
+                    }, 1000)
+                  }, 1000)
+                }
+
+              }, timeFrame)
+
+
+
+            } else {
+              document.getElementById("playerCountRuleCheck").style.color="red"
+              window.setTimeout(function() {
+                document.getElementById("playerCountRuleCheck").style.color="black"
+              }, 1500)
+            }
+          })
+        }
+      
+      goGame();
+      
+            
+      let customQuestionMap = new Map();
+      
+      document.getElementById("createMyOwnQuiz").addEventListener("click", function() {
+        
+        document.getElementById("inputQuestion").value = ''
+        document.getElementById("inputAnswerA").value = ''
+        document.getElementById("inputAnswerB").value = ''
+        document.getElementById("inputAnswerC").value = ''
+        document.getElementById("inputAnswerD").value = ''
+        
+        document.getElementById("nameJSONFILE").style.visibility = "hidden";
+        
+        let questionNumber = 1;
+        
+        document.getElementById("questionNumber").innerHTML = `Question ${questionNumber}`
+        
+        document.getElementById("game").style.visibility = "hidden";
+        
+        document.getElementById("downloadGame").style.visibility = "hidden"
+        
+        document.getElementById("everythingInCustomQuiz").style = "";
+        
+        let correctAnswer;
+        
+        document.getElementById("setAnswerACorrect").addEventListener("click", function() {
+          correctAnswer = "B"
+          console.log("B")
+          
+          document.getElementById("setAnswerACorrect").innerHTML = "✅"
+          document.getElementById("setAnswerBCorrect").innerHTML = "✔️";
+          document.getElementById("setAnswerCCorrect").innerHTML = "✔️";
+          document.getElementById("setAnswerDCorrect").innerHTML = "✔️";
+        })
+        
+        document.getElementById("setAnswerBCorrect").addEventListener("click", function() {
+          correctAnswer = "A"
+          console.log("A")
+          
+          document.getElementById("setAnswerACorrect").innerHTML = "✔️"
+          document.getElementById("setAnswerBCorrect").innerHTML = "✅";
+          document.getElementById("setAnswerCCorrect").innerHTML = "✔️";
+          document.getElementById("setAnswerDCorrect").innerHTML = "✔️";
+        })
+        
+        document.getElementById("setAnswerCCorrect").addEventListener("click", function() {
+          correctAnswer = "C"
+          console.log("C")
+          
+          document.getElementById("setAnswerACorrect").innerHTML = "✔️";
+          document.getElementById("setAnswerBCorrect").innerHTML = "✔️";
+          document.getElementById("setAnswerCCorrect").innerHTML = "✅";
+          document.getElementById("setAnswerDCorrect").innerHTML = "✔️";
+        })
+        
+        document.getElementById("setAnswerDCorrect").addEventListener("click", function() {
+          correctAnswer = "D"
+          console.log("D")
+          
+          document.getElementById("setAnswerACorrect").innerHTML = "✔️";
+          document.getElementById("setAnswerBCorrect").innerHTML = "✔️";
+          document.getElementById("setAnswerCCorrect").innerHTML = "✔️";
+          document.getElementById("setAnswerDCorrect").innerHTML = "✅"
+          
+        })
+        
+        document.getElementById("createNewQuestion").addEventListener("click", function() {
+          if ((document.getElementById("inputQuestion").value.trim('') != '') && ((document.getElementById("inputAnswerA").value.trim('') != '')) && (document.getElementById("inputAnswerB").value.trim('') != '') && (correctAnswer)) {
+            customQuestionMap.set(questionNumber, [document.getElementById("inputQuestion").value,document.getElementById("inputAnswerA").value, document.getElementById("inputAnswerB").value, document.getElementById("inputAnswerC").value, document.getElementById("inputAnswerD").value, correctAnswer]);
+            correctAnswer = undefined;
+            
+            questionNumber++;
+            
+            document.getElementById("questionNumber").innerHTML = `Question ${questionNumber}`
+            
+            document.getElementById("inputQuestion").value = ''
+            document.getElementById("inputAnswerA").value = ''
+            document.getElementById("inputAnswerB").value = ''
+            document.getElementById("inputAnswerC").value = ''
+            document.getElementById("inputAnswerD").value = ''
+            
+            document.getElementById("setAnswerACorrect").innerHTML = "✔️";
+            document.getElementById("setAnswerBCorrect").innerHTML = "✔️";
+            document.getElementById("setAnswerCCorrect").innerHTML = "✔️";
+            document.getElementById("setAnswerDCorrect").innerHTML = "✔️";
+          } else { // wrongDoing
+            document.getElementById("wrongDoing").style.visibility = "visible";
+            
+            window.setTimeout(function () {
+              document.getElementById("wrongDoing").style.visibility = "hidden";
+            }, 4500)
+            
+          } 
+        })
+        
+        
+        document.getElementById("compileQuiz").addEventListener("click", function() {
+          if ((document.getElementById("inputQuestion").value.trim('') != '') && ((document.getElementById("inputAnswerA").value.trim('') != '')) && (document.getElementById("inputAnswerB").value.trim('') != '') && (correctAnswer) && (questionNumber >= 2)) {
+            customQuestionMap.set(questionNumber, [document.getElementById("inputQuestion").value,document.getElementById("inputAnswerA").value, document.getElementById("inputAnswerB").value, document.getElementById("inputAnswerC").value, document.getElementById("inputAnswerD").value, correctAnswer]);
+            correctAnswer = undefined;
+            
+            questionNumber++;
+            
+            document.getElementById("downloadGame").style.visibility = "visible";
+            document.getElementById("game").style.visibility = "visible";
+            
+            document.getElementById("everythingInCustomQuiz").style = "display: none";
+            
+            for (let [question, array] of customQuestionMap) {
+              if (array[5] == undefined) {
+                customQuestionMap.delete(question);
+              }
+            }
+            
+            questionMap = customQuestionMap;
+            
+            customQuestionMap = new Map();
+            
+            questionNumber = 1;
+            
+            document.getElementById("nameJSONFILE").style.visibility = "visible";
+            
+            
+            
+            
+            document.getElementById("downloadGame").addEventListener("click", function() {
+              let jsonData = {};
+              
+              for (let [qNumber, array] of questionMap) {
+                let input1 = qNumber;
+                let input2 = `${array[0]}-?-${array[1]}-!-${array[2]}-!-${array[3]}-!-${array[4]}-!-${array[5]}`;
+                
+                jsonData[input1] = input2;
+                
+                function download(content, fileName, contentType) {
+                 const a = document.createElement("a");
+                 const file = new Blob([content], { type: contentType });
+                 a.href = URL.createObjectURL(file);
+                 a.download = fileName;
+                 a.click();
+                }
+
+                function onDownload(){
+                 download(JSON.stringify(jsonData), `${document.getElementById("nameJSONFILE").value}.json`, "text/plain");
+                }
+                
+                onDownload();
+                
+                
+              }
+              
+              console.log(jsonData);
+            })
+            
+            
+            
+          } else if (questionNumber >= 2) {
+            customQuestionMap.set(questionNumber, [document.getElementById("inputQuestion").value,document.getElementById("inputAnswerA").value, document.getElementById("inputAnswerB").value, document.getElementById("inputAnswerC").value, document.getElementById("inputAnswerD").value, correctAnswer]);
+            correctAnswer = undefined;
+            
+            questionNumber++;
+            
+            document.getElementById("everythingInCustomQuiz").style = "display: none";
+            
+            document.getElementById("downloadGame").style.visibility = "visible";
+            document.getElementById("game").style.visibility = "visible";
+            
+            for (let [question, array] of customQuestionMap) {
+              if (array[5] == undefined) {
+                customQuestionMap.delete(question);
+              }
+            }
+            
+            questionMap = customQuestionMap;
+            
+            customQuestionMap = new Map();
+            
+            questionNumber = 1;
+            
+            document.getElementById("nameJSONFILE").style.visibility = "visible";
+            
+            
+            
+            document.getElementById("downloadGame").addEventListener("click", function() {
+              let jsonData = {};
+              
+              for (let [qNumber, array] of questionMap) {
+                let input1 = qNumber;
+                let input2 = `${array[0]}-!-${array[1]}-!-${array[2]}-!-${array[3]}-!-${array[4]}-!-${array[5]}`;
+                
+                jsonData[input1] = input2;
+              }
+              
+              function download(content, fileName, contentType) {
+               const a = document.createElement("a");
+               const file = new Blob([content], { type: contentType });
+               a.href = URL.createObjectURL(file);
+               a.download = fileName;
+               a.click();
+              }
+
+              function onDownload(){
+               download(JSON.stringify(jsonData), `${document.getElementById("nameJSONFILE").value}.json`, "text/plain");
+              }
+              
+              onDownload();
+              
+              console.log(jsonData);
+            })
+            
+            
+            
+          }
+        })
+      })
+      
+      let fr = new FileReader();
+      
+      let newQuestionArrayCustom = new Map();
+      
+      document.getElementById("uploadMyOwnQuiz").addEventListener("input", function() {
+        
+        
+        
+        let files = document.getElementById("selectFile").files;
+        
+        
+        
+        
+        
+        
+        
+        document.getElementById("selectFile").files.item(0).text().then(text => {
+          json = JSON.parse(text);
+          console.log(json);
+          
+          
+          
+          for (let [number, array] in json) {
+            newQuestionArrayCustom.set(JSON.parse(number), json[number].split("-!-"));
+          }
+          
+          console.log(newQuestionArrayCustom)
+          
+          questionMap = newQuestionArrayCustom;
+          
+          goGameDirect();
+          
+          
+        })
+
+        
+      })
+      
+      
+      
+    </script>
+  </body>
+</html>
