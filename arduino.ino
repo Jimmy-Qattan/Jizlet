@@ -20,8 +20,8 @@ void setup()
 
   }
 
-  BLE.setLocalName("Game Controller 1");
-  BLE.setDeviceName("Game Controller 1");
+  BLE.setLocalName("Game Controller");
+  BLE.setDeviceName("Game Controller");
 
 
   BLE.addService(service);
@@ -48,11 +48,11 @@ void loop()
   
 
   if (digitalRead(2) == HIGH) {
-    Serial.println("D");
+    Serial.println("C");
 
 
     if (BLE.connected()) {
-      characteristic.writeValue('D');
+      characteristic.writeValue('C');
     }
   } 
   if (digitalRead(3) == HIGH) {
@@ -63,10 +63,10 @@ void loop()
     }
   } 
   if (digitalRead(4) == HIGH) {
-    Serial.println("C");
+    Serial.println("D");
 
     if (BLE.connected()) {
-      characteristic.writeValue('C');
+      characteristic.writeValue('D');
     }
   } 
   if (digitalRead(5) == HIGH) {
